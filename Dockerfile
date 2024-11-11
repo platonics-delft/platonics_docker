@@ -10,6 +10,8 @@ ENV TZ=Europe/Amsterdam
 ENV ROOT=/root
 ENV WS=$ROOT/catkin_ws
 
+ENV DISPLAY :0
+
 COPY .tmux.conf $ROOT/.tmux.conf
 
 # Create a new user
@@ -51,10 +53,19 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/librealsense.pgp] https://librealsens
 # Install librealsense2
 RUN apt-get update && apt-get install -y librealsense2-dev
 
-# Install node and npm
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm
+
+# Install curl to download Node.js setup script
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# Ensure you have the correct Node.js version
+RUN node -v
+
+# Upgrade npm to version 10.8.2
+RUN npm install -g npm@10.8.2 && npm -v
+
 
 RUN apt-get update && apt-get install -y \
   libx11-xcb1 \
