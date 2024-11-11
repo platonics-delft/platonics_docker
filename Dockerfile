@@ -32,6 +32,7 @@ RUN apt update \
         gnupg2 \
         tmuxp \
         vim \
+        npm \
         ros-noetic-actionlib-tools \
         ros-noetic-dynamic-reconfigure \
         ros-noetic-ddynamic-reconfigure \
