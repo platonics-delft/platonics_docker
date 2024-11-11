@@ -54,7 +54,7 @@ RUN apt-get update && apt-get install -y librealsense2-dev
 # Install node and npm
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
-    && npm install -g npm@latest
+    && npm install -g npm
 
 RUN apt-get update && apt-get install -y \
   libx11-xcb1 \
