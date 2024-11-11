@@ -1,0 +1,26 @@
+session_name: PlatonicsGui
+shell_command_before:
+- cd /root/catkin_ws
+- source devel/setup.bash
+- export ROS_MASTER_URI=http://172.16.0.99:11311
+- export ROS_HOSTNAME=172.16.0.3
+windows:
+  - window_name: platonics_vision
+    layout: tiled
+    panes:
+      - roslaunch platonics_vision depth_camera.launch rviz:=False --wait
+      - rosrun platonics_vision sift_service
+      - rosrun platonics_vision iterative_sift_service
+      - rosrun platonics_vision slider_solver_action_server
+  - window_name: lfd
+    layout: tiled
+    panes: 
+      - rosrun skills_manager lfd_servers
+      - roslaunch rosbridge_server rosbridge_websocket.launch --wait
+  - window_name: utils
+    layout: tiled
+    panes: 
+      - cd src/platonics_gui; npm run start
+      - rosrun skills_manager recording_node
+        # - rosrun rviz rviz -d /home/mspahn/catkin_robothon/src/platonics_tools/config/config.rviz
+        #- rosrun rqt_reconfigure rqt_reconfigure
