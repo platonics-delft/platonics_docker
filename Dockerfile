@@ -55,6 +55,20 @@ RUN apt-get update && apt-get install -y librealsense2-dev
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs
 
+RUN apt-get update && apt-get install -y \
+  libx11-xcb1 \
+  libxcb1 \
+  libxrender1 \
+  libxrandr2 \
+  libxi6 \
+  libxtst6 \
+  libxcursor1 \
+  libxcomposite1 \
+  libasound2 \
+  libxt6 \
+  libxfixes3
+
+
 
 # Create catkin workspace
 RUN mkdir -p $WS/src \
