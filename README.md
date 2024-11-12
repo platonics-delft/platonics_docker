@@ -10,7 +10,9 @@ Installation for docker for [linux ubuntu](https://docs.docker.com/desktop/setup
 
 ## Download the image
 
-A running container is available on dockerhub. To download the image, run the following command:
+A running container is available on
+[dockerhub](https://hub.docker.com/repository/docker/maxspahn/platonics_ros/general).
+To download the image, run the following command:
 ```bash
 docker pull maxspahn/platonics_ros
 ```
