@@ -2,8 +2,8 @@ session_name: PlatonicsGui
 shell_command_before:
 - cd /root/catkin_ws
 - source devel/setup.bash
-- export ROS_MASTER_URI=http://172.16.0.99:11311
-- export ROS_HOSTNAME=172.16.0.3
+- export ROS_MASTER_URI=http://${IP_REALTIME_MACHINE}:11311
+- export ROS_HOSTNAME=${IP_HOST}
 windows:
   - window_name: platonics_vision
     layout: tiled
@@ -22,5 +22,3 @@ windows:
     panes: 
       - cd src/platonics_gui; npm run start
       - rosrun skills_manager recording_node
-        # - rosrun rviz rviz -d /home/mspahn/catkin_robothon/src/platonics_tools/config/config.rviz
-        #- rosrun rqt_reconfigure rqt_reconfigure

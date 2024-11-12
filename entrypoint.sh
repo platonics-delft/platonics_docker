@@ -1,15 +1,12 @@
 #! /bin/bash
 #
-# Start a new terminal for user platonic
+# Navigate to /root folder and start the tmux session
 #
-# 
-#
-# Navigate to the home directory
-
 cd /root
 
-tmuxp load /root/start_app.yaml
+IP_REALTIME_MACHINE=$1
+IP_HOST=$2
 
 
-exec /bin/bash
 
+env IP_REALTIME_MACHINE=$IP_REALTIME_MACHINE IP_HOST=$IP_HOST tmuxp load /root/start_app.yaml

@@ -1,5 +1,5 @@
 #! /bin/bash
-docker run -it -e DISPLAY=$DISPLAY -v $HOME/docker/platonics_data:/root/catkin_ws/src/platonics_dataset --privileged --network host \
+docker run -it -e DISPLAY=$DISPLAY -v $HOME/docker/platonics_trajectory_data:/root/catkin_ws/src/platonics_dataset/trajectories --privileged --network host \
   -v /opt/ros/noetic:/opt/ros/noetic \
   -v /path/to/libfranka:/path/to/libfranka \
-  platonics_ros:latest
+  platonics_ros:base $1 $2

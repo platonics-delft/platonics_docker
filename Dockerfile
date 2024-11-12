@@ -1,5 +1,5 @@
 # Select base image
-FROM osrf/ros:noetic-desktop-full
+FROM ros:noetic-ros-base
 
 # Set environment variables that persist in the container
 ENV DEBIAN_FRONTEND=noninteractive
@@ -10,17 +10,22 @@ ENV TZ=Europe/Amsterdam
 ENV ROOT=/root
 ENV WS=$ROOT/catkin_ws
 
-ENV DISPLAY :0
+ENV DISPLAY=:0
 
 COPY .tmux.conf $ROOT/.tmux.conf
 
-# Create a new user
+# Set the timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Create the ROOT directory
+
+RUN mkdir -p $ROOT
 
 
 
 
 # Install ubuntu packages
-RUN apt update \
+RUN apt-get update \
     && apt install -y --no-install-recommends \
         build-essential \
         git \
@@ -31,8 +36,24 @@ RUN apt update \
         lsb-release \
         gnupg2 \
         tmuxp \
-        vim \
         npm \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt install -y --no-install-recommends \
+        ros-noetic-cv-bridge \
+        ros-noetic-tf2-ros \
+        ros-noetic-tf \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt install -y --no-install-recommends \
+        libeigen3-dev \
+        ros-noetic-rqt-reconfigure \
+        ros-noetic-diagnostic-updater \
+        ros-noetic-tf2 \
+        ros-noetic-vision-opencv \
+        ros-noetic-image-common \
         ros-noetic-actionlib-tools \
         ros-noetic-dynamic-reconfigure \
         ros-noetic-ddynamic-reconfigure \
@@ -59,28 +80,22 @@ RUN apt-get update && apt-get install -y librealsense2-dev
 RUN apt-get update && \
     apt-get install -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Ensure you have the correct Node.js version
 RUN node -v
 
 # Upgrade npm to version 10.8.2
-RUN npm install -g npm@10.8.2 && npm -v
+RUN npm install -g npm@10.8.2 && npm -v && npm cache clean --force
 
 
 RUN apt-get update && apt-get install -y \
   libx11-xcb1 \
   libxcb1 \
-  libxrender1 \
-  libxrandr2 \
-  libxi6 \
-  libxtst6 \
-  libxcursor1 \
-  libxcomposite1 \
-  libasound2 \
-  libxt6 \
-  libxfixes3
-
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/*
 
 
 # Create catkin workspace
@@ -133,15 +148,15 @@ RUN set -x \
 # Install npm packages
 
 RUN cd $WS/src/platonics_gui \
-  && npm install
+  && npm install \
+  && npm cache clean --force
 
 # Install python dependencies
-RUN pip3 install -r $WS/src/platonics_robot_teaching/requirements.txt \
-  && pip3 install -r $WS/src/platonics_dataset/requirements.txt \
-  && pip3 install -r $WS/src/panda-ros-py/requirements.txt \
-  && pip3 install -r $WS/src/platonics_tools/requirements.txt
+RUN pip3 install --no-cache-dir -r $WS/src/platonics_robot_teaching/requirements.txt \
+  && pip3 install --no-cache-dir -r $WS/src/platonics_dataset/requirements.txt \
+  && pip3 install --no-cache-dir -r $WS/src/panda-ros-py/requirements.txt
 
-# Copy tmuxp file
+# Copy tmuxp config file
 
 COPY start_app.yaml $ROOT/start_app.yaml
 

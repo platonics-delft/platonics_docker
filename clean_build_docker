@@ -1,4 +1,4 @@
 #! /bin/bash 
 #
 # build the docker image with the tage light
-docker build -t platonics_ros:base .
+docker build --no-cache -t platonics_ros:base .
