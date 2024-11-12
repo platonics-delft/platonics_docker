@@ -3,10 +3,6 @@
 Make sure you have docker installed.
 Installation for docker for [linux ubuntu](https://docs.docker.com/desktop/setup/install/linux/ubuntu/)
 
-## Build the image
-```bash
-./build_docker
-```
 
 ## Download the image
 
@@ -14,7 +10,7 @@ A running container is available on
 [dockerhub](https://hub.docker.com/repository/docker/maxspahn/platonics_ros/general).
 To download the image, run the following command:
 ```bash
-docker pull maxspahn/platonics_ros
+docker pull maxspahn/platonics_ros:base
 ```
 
 ## Run the container
@@ -36,3 +32,8 @@ xhost +local:docker
 
 Then you can open `localhost:8080` in your browser to interact with the robot,
 record trajectories and execute them.
+
+## Build the image
+```bash
+./build_docker
+```
