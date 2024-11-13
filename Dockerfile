@@ -44,6 +44,9 @@ RUN apt-get update && apt install -y --no-install-recommends \
         ros-noetic-cv-bridge \
         ros-noetic-tf2-ros \
         ros-noetic-tf \
+        ros-noetic-image-transport \
+        ros-noetic-image-transport-plugins \
+        ros-noetic-compressed-image-transport \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 

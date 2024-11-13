@@ -1,3 +1,10 @@
 #! /bin/bash
+#
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage: run_docker <realtime-ip> <host-ip>"
+  exit 1
+fi
+
 docker run -it -e DISPLAY=$DISPLAY -v $HOME/docker/platonics_trajectory_data:/root/catkin_ws/src/platonics_dataset/trajectories --privileged --network host \
   maxspahn/platonics_ros:base $1 $2

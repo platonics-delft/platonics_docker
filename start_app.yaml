@@ -4,6 +4,7 @@ shell_command_before:
 - source devel/setup.bash
 - export ROS_MASTER_URI=http://${IP_REALTIME_MACHINE}:11311
 - export ROS_HOSTNAME=${IP_HOST}
+- export VITE_IP=${IP_HOST}
 windows:
   - window_name: platonics_vision
     layout: tiled
