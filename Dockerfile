@@ -58,6 +58,8 @@ RUN apt-get update && apt install -y --no-install-recommends \
         ros-noetic-dynamic-reconfigure \
         ros-noetic-ddynamic-reconfigure \
         ros-noetic-rosbridge-suite \
+        ros-noetic-franka-gripper \
+        ros-noetic-franka-msgs \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -120,7 +122,7 @@ RUN echo "Last updated at $(date)" > last_update.txt
 
 ## Pull latest changes in repos
 RUN cd $WS/src/panda-ros-py \
-  && git pull origin main \
+  && git checkout ft-remove-franka-copies \
   && cd $WS/src/platonics_robot_teaching \
   && git pull \
   && cd $WS/src/platonics_vision \
@@ -138,12 +140,7 @@ RUN cd $WS/src/panda-ros-py \
 # Build the workspace
 RUN set -x \
   && cd $WS \
-  && catkin build panda_ros \
-  && catkin build realsense2_description \
-  && catkin build realsense2_camera \
-  && catkin build platonics_dataset \
-  && catkin build platonics_vision \
-  && catkin build skills_manager 
+  && catkin build
 
 # Install npm packages
 
